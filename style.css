@@ -6,7 +6,7 @@ body {
 }
 
 .form {
-  width: 300px;
+  width: 600px;
   padding: 32px;
   border-radius: 10px;
   box-shadow: 0 4px 16px #ccc;
@@ -70,4 +70,25 @@ body {
   top: -18px;
   font-size: 12px;
 
+}
+
+.red {
+  color: rgb(195, 56, 56)
+}
+
+.hidden,
+.hidden:hover,
+.hidden:focus {
+  color: transparent;
+  background-color: transparent;
+  border: none;
+  transition: 0.1s;
+  cursor: default;
+}
+
+.result-text {
+  position: absolute;
+  font-family: sans-serif;
+  font-weight: normal;
+  font-size: 24px;
 }
