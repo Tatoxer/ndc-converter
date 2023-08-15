@@ -1,12 +1,3 @@
-const form = document.querySelector('.form');
-const button = document.querySelector('.form-button');
-const label = document.querySelector('.form-label');
-const input = document.querySelector('.form-input');
-const resultText = document.querySelector('.result-text');
-
-const roublesWords = ['рубль', 'рубля', 'рублей'];
-const kopeykiWords = ['копейка', 'копейки', 'копеек'];
-
 function intToWords(int, names) {
   const result = [];
   if (typeof int === 'number') {
@@ -141,49 +132,5 @@ function intToWords(int, names) {
   }
   return result.join(' ');
 }
-
-function numWord(value, words) {
-  value = Math.abs(value) % 100;
-  const num = value % 10;
-  if (value > 10 && value < 20) return words[2];
-  if (num > 1 && num < 5) return words[1];
-  if (num == 1) return words[0];
-  return words[2];
-}
-
-function splitNumber(number) {
-  const numberToString = String(number);
-  return numberToString.split('.');
-}
-
-const calculateNDC = () => {
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const formData = new FormData(event.target);
-    const number = Number(formData.get('number'));
-    const [roubles, kopeyki] = splitNumber(number);
-    const roublesInWords = intToWords(roubles).concat(
-      ` ${numWord(roubles, roublesWords)}`
-    );
-    const kopeykiInWords = intToWords(kopeyki).concat(
-      ` ${numWord(kopeyki, kopeykiWords)}`
-    );
-
-    let result = `${roublesInWords} ${kopeykiInWords}`;
-
-    if (isNaN(number)) {
-      label.textContent = 'Нужно ввести число';
-      label.classList.add('red');
-    } else {
-      button.classList.add('hidden');
-      label.classList.add('hidden');
-      input.classList.add('hidden');
-      resultText.classList.remove('hidden');
-
-      resultText.textContent = result;
-    }
-  });
-};
-
-calculateNDC();
+// console.log(intToWords(12));
+export { intToWords };
