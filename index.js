@@ -148,13 +148,12 @@ function capitalize(text) {
 }
 
 function makeWordsFromValues(number) {
-  const numberToString = String(number);
+  const numberToString = number.toFixed(2);
   const [roubles, kopeyki] = numberToString.split('.');
   const result = [];
 
   result.push(capitalize(intToWords(roubles, roublesWords)));
-
-  if (kopeyki === undefined) {
+  if (kopeyki === '00') {
     result.push('00 копеек');
   } else {
     result.push(intToWords(kopeyki, kopeykiWords));
@@ -163,13 +162,22 @@ function makeWordsFromValues(number) {
   return result.join(' ');
 }
 
+function makeNDC(number) {
+  const ndc = (number / 120) * 20;
+  const ndcInwords = makeWordsFromValues(ndc);
+  return `, в том числе НДС (20%) - ${ndcInwords}`;
+}
+
 const app = () => {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.target);
     const number = Number(formData.get('number'));
-    const result = makeWordsFromValues(number);
+
+    const ndc = makeNDC(number);
+    const wordsFromValues = makeWordsFromValues(number);
+    const result = `${wordsFromValues}${ndc}`;
 
     if (isNaN(number)) {
       label.textContent = 'Нужно ввести число';
