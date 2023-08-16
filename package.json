@@ -19,5 +19,8 @@
   "homepage": "https://github.com/Tatoxer/ndc-converter#readme",
   "devDependencies": {
     "eslint": "^8.47.0"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
   }
 }

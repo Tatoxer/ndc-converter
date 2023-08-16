@@ -142,35 +142,34 @@ function intToWords(int, names) {
   return result.join(' ');
 }
 
-function numWord(value, words) {
-  value = Math.abs(value) % 100;
-  const num = value % 10;
-  if (value > 10 && value < 20) return words[2];
-  if (num > 1 && num < 5) return words[1];
-  if (num == 1) return words[0];
-  return words[2];
+function capitalize(text) {
+  const firstLetter = text.slice(0, 1).toUpperCase();
+  return `${firstLetter}${text.slice(1, text.length)}`;
 }
 
-function splitNumber(number) {
+function makeWordsFromValues(number) {
   const numberToString = String(number);
-  return numberToString.split('.');
+  const [roubles, kopeyki] = numberToString.split('.');
+  const result = [];
+
+  result.push(capitalize(intToWords(roubles, roublesWords)));
+
+  if (kopeyki === undefined) {
+    result.push('00 копеек');
+  } else {
+    result.push(intToWords(kopeyki, kopeykiWords));
+  }
+
+  return result.join(' ');
 }
 
-const calculateNDC = () => {
+const app = () => {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.target);
     const number = Number(formData.get('number'));
-    const [roubles, kopeyki] = splitNumber(number);
-    const roublesInWords = intToWords(roubles).concat(
-      ` ${numWord(roubles, roublesWords)}`
-    );
-    const kopeykiInWords = intToWords(kopeyki).concat(
-      ` ${numWord(kopeyki, kopeykiWords)}`
-    );
-
-    let result = `${roublesInWords} ${kopeykiInWords}`;
+    const result = makeWordsFromValues(number);
 
     if (isNaN(number)) {
       label.textContent = 'Нужно ввести число';
@@ -186,4 +185,4 @@ const calculateNDC = () => {
   });
 };
 
-calculateNDC();
+app();

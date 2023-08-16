@@ -87,8 +87,9 @@ body {
 }
 
 .result-text {
-  position: absolute;
+  position: relative;
   font-family: sans-serif;
   font-weight: normal;
   font-size: 24px;
+  z-index: 2;
 }
