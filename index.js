@@ -179,13 +179,14 @@ const app = () => {
     const wordsFromValues = makeWordsFromValues(number);
     const result = `${wordsFromValues}${ndc}`;
 
-    if (isNaN(number)) {
+    if (isNaN(number) || number === 0) {
       label.textContent = 'Нужно ввести число';
       label.classList.add('red');
     } else {
       button.classList.add('hidden');
       label.classList.add('hidden');
       input.classList.add('hidden');
+
       resultText.classList.remove('hidden');
 
       resultText.textContent = result;

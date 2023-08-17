@@ -51,7 +51,8 @@ body {
   border-bottom: 1px solid #1a73a8;
 }
 
-.form-button {
+.form-button,
+.button {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -61,9 +62,11 @@ body {
   transition: 0.3s;
 }
 
-.form-button:hover {
+.form-button:hover,
+.button:hover {
   background-color: rgba(60, 110, 234, 0.8);
 }
+
 
 .form-input:focus ~ .form-label,
 .form-input:not(:placeholder-shown) ~ .form-label {
