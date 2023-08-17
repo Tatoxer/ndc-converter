@@ -153,8 +153,11 @@ function makeWordsFromValues(number) {
   const result = [];
 
   result.push(capitalize(intToWords(roubles, roublesWords)));
+  console.log(intToWords(kopeyki, kopeykiWords).slice(-12, -8));
   if (kopeyki === '00') {
     result.push('00 копеек');
+  } else if (intToWords(kopeyki, kopeykiWords).slice(-12, -7) === 'два ') {
+    result.push(intToWords(kopeyki, kopeykiWords).replace('два', 'две'));
   } else {
     result.push(intToWords(kopeyki, kopeykiWords));
   }
@@ -165,7 +168,7 @@ function makeWordsFromValues(number) {
 function makeNDC(number) {
   const ndc = (number / 120) * 20;
   const ndcInwords = makeWordsFromValues(ndc);
-  return `, в том числе НДС (20%) - ${ndcInwords}`;
+  return `, в том числе НДС (20%) - ${ndc.toFixed(2)} руб. (${ndcInwords})`;
 }
 
 const app = () => {
