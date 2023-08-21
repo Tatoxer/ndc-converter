@@ -152,18 +152,18 @@ function makeWordsFromValues(number) {
   const [roubles, kopeyki] = numberToString.split('.');
   const result = [];
 
-  result.push(`${roubles}.${kopeyki} руб. `);
+  result.push(`${roubles},${kopeyki} руб. `);
   result.push(`(${capitalize(intToWords(roubles, roublesWords))}`);
 
   if (kopeyki === '00') {
-    result.push('00 копеек');
+    result.push(' 00 копеек');
   } else if (intToWords(kopeyki, kopeykiWords).slice(-11, -7) === 'два ') {
-    result.push(intToWords(kopeyki, kopeykiWords).replace('два', 'две'));
+    result.push(` ${intToWords(kopeyki, kopeykiWords).replace('два', 'две')}`);
   } else {
-    result.push(intToWords(kopeyki, kopeykiWords));
+    result.push(` ${intToWords(kopeyki, kopeykiWords)}`);
   }
   result.push(')');
-  return result.join(' ');
+  return result.join('');
 }
 
 function makeNDC(number) {
