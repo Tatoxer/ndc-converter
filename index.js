@@ -148,7 +148,7 @@ function capitalize(text) {
 }
 
 function makeWordsFromValues(number) {
-  const numberToString = number.toFixed(2);
+  const numberToString = Number(number).toFixed(2);
   const [roubles, kopeyki] = numberToString.split('.');
   const result = [];
 
@@ -177,7 +177,8 @@ const app = () => {
     event.preventDefault();
 
     const formData = new FormData(event.target);
-    const number = Number(formData.get('number'));
+    const number = formData.get('text').replace(',', '.');
+    console.log(number);
 
     const ndc = makeNDC(number);
     const wordsFromValues = makeWordsFromValues(number);
