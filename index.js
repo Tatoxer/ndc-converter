@@ -1,11 +1,42 @@
-const form = document.querySelector('.form');
-const button = document.querySelector('.form-button');
-const label = document.querySelector('.form-label');
-const input = document.querySelector('.form-input');
-const resultText = document.querySelector('.result-text');
-
 const roublesWords = ['рубль', 'рубля', 'рублей'];
 const kopeykiWords = ['копейка', 'копейки', 'копеек'];
+
+function init() {
+  const form = document.querySelector('.form');
+  const button = document.querySelector('.form-button');
+  const label = document.querySelector('.form-label');
+  const input = document.querySelector('.form-input');
+  return {
+    result: '',
+    uiState: {
+      status: 'form', // result
+      valid: true,
+    },
+    initialFrom: {
+      form,
+      button,
+      label,
+      input,
+    },
+  };
+}
+
+function render(state) {
+  if (!state.uiState.valid) {
+    state.initialFrom.label.textContent = 'Нужно ввести число';
+    state.initialFrom.label.classList.add('red');
+  }
+
+  if (state.uiState.status === 'result') {
+    const container = document.querySelector('.container');
+    container.innerHTML = '';
+    const divResult = document.createElement('div');
+    divResult.classList.add('result-text');
+    divResult.textContent = state.result;
+    container.append(divResult);
+  }
+  console.log(state.initialFrom.status);
+}
 
 function intToWords(int, names) {
   const result = [];
@@ -173,29 +204,26 @@ function makeNDC(number) {
 }
 
 const app = () => {
-  form.addEventListener('submit', (event) => {
+  const state = init();
+
+  state.initialFrom.form.addEventListener('submit', (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.target);
     const number = formData.get('text').replace(',', '.');
-    console.log(number);
 
     const ndc = makeNDC(number);
     const wordsFromValues = makeWordsFromValues(number);
     const result = `${wordsFromValues}${ndc}`;
 
     if (isNaN(number) || number === 0) {
-      label.textContent = 'Нужно ввести число';
-      label.classList.add('red');
+      state.uiState.valid = false;
     } else {
-      button.classList.add('hidden');
-      label.classList.add('hidden');
-      input.classList.add('hidden');
-
-      resultText.classList.remove('hidden');
-
-      resultText.textContent = result;
+      state.uiState.valid = true;
+      state.uiState.status = 'result';
+      state.result = result;
     }
+    render(state);
   });
 };
 
