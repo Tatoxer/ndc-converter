@@ -7,7 +7,10 @@ function init() {
   const label = document.querySelector('.form-label');
   const input = document.querySelector('.form-input');
   return {
-    result: '',
+    result: {
+      resultText: '',
+      button: '',
+    },
     uiState: {
       status: 'form', // result
       valid: true,
@@ -32,10 +35,10 @@ function render(state) {
     container.innerHTML = '';
     const divResult = document.createElement('div');
     divResult.classList.add('result-text');
-    divResult.textContent = state.result;
+    divResult.textContent = state.result.resultText;
     container.append(divResult);
+    container.append(state.result.button);
   }
-  console.log(state.initialFrom.status);
 }
 
 function intToWords(int, names) {
@@ -221,7 +224,17 @@ const app = () => {
     } else {
       state.uiState.valid = true;
       state.uiState.status = 'result';
-      state.result = result;
+      state.result.resultText = result;
+
+      const button = document.createElement('button');
+      button.classList.add('button', 'refresh-button');
+      button.textContent = 'Заново';
+
+      button.addEventListener('click', () => {
+        location.reload();
+      });
+
+      state.result.button = button;
     }
     render(state);
   });
